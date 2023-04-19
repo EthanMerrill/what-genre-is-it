@@ -12,7 +12,7 @@ const Redirect = () => {
     const client_id = process.env.NEXT_PUBLIC_SPOTIFY_CLIENT;
     const client_secret = process.env.NEXT_PUBLIC_SPOTIFY_SECRET;
     const redirect_uri = 'http://localhost:3001'
-    const scope = 'user-read-currently-playing'
+    const scope = encodeURIComponent('user-read-currently-playing user-read-recently-played')
 
     console.log(`
         client_id: ${client_id}
