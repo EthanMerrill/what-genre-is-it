@@ -19,7 +19,7 @@ export default function Home() {
   }, [])
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <main className="flex min-h-screen flex-col items-center justify-between ">
       <div className="flex flex-col items-center justify-center">
         <h1>What genre is this?</h1>
         <Search/>

@@ -1,14 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import axios, { AxiosResponse } from 'axios';
-import { getGenre } from '@/utils/utils';
-import { generateKey } from 'crypto';
+import FooterInfo from '@/types/footerInfo.interface';
+import NowPlayingFooter from './NowPlayingFooter';
 
 const SpotifyData = (props: { access_token: string }) => {
     const [apiData, setApiData] = useState(null)
     const [currentSongId, setCurrentSongId] = useState<string | null>(null)
     const [genre, setGenre] = useState<string | null>(null)
     const { access_token } = props
-
+    const [footerInfo, setFooterInfo] = useState<FooterInfo>({
+        title: '',
+        artist: '',
+        album: '',
+        albumArt: '',
+        genre: []
+    })
 
     useEffect(() => {
         const headers = {
@@ -16,6 +22,14 @@ const SpotifyData = (props: { access_token: string }) => {
         }
         if (access_token) {
             axios.get(`https://api.spotify.com/v1/artists/${currentSongId}`, { headers: headers }).then((response: AxiosResponse) => {
+                console.log('artist data ',response.data)
+                setFooterInfo({
+                    title: footerInfo.title,
+                    artist: footerInfo.artist,
+                    album: footerInfo.album,
+                    albumArt: footerInfo.albumArt,
+                    genre: response.data.genres
+                })
                 setGenre(response.data.genres)
             }, (error: Error) => {
                 console.log(error)
@@ -31,7 +45,14 @@ const SpotifyData = (props: { access_token: string }) => {
         if (access_token) {
             axios.get(`https://api.spotify.com/v1/me/player/currently-playing`, { headers: headers })
                 .then((response: AxiosResponse) => {
-                    // console.log(response.data)
+                    console.log('songData', response.data)
+                    setFooterInfo({
+                        title: response.data.item.name,
+                        artist: response.data.item.artists[0].name,
+                        album: response.data.item.album.name,
+                        albumArt: response.data.item.album.images[0].url,
+                        genre: []
+                    })
                     setCurrentSongId(response.data.item.artists[0].id)
                 }, (error: Error) => {
                     console.log(error)
@@ -42,7 +63,11 @@ const SpotifyData = (props: { access_token: string }) => {
 
     return (
         <div>
-            {access_token ? <div>{genre}</div> : null}
+            {access_token ? 
+            <NowPlayingFooter
+                FooterInfo={footerInfo}
+            />
+            : null}
         </div>
     )
 }
