@@ -10,7 +10,10 @@ navigate to (URL TBD) and type the name of the song you want to find the genre o
 
 ## Todo
 
-- [ ] add searchbox
+- [x] add searchbox
+    [ ] add search icon
 - [ ] add search button
-- [ ] setup spotify api
-- [ ] get song genre from spotify api
+- [x] setup spotify api
+- [x] get song genre from spotify api
+- [ ] put all spotify requests in a hook/re-architect so structure makes sense
+

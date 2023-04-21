@@ -22,7 +22,6 @@ const SpotifyData = (props: { access_token: string }) => {
         }
         if (access_token) {
             axios.get(`https://api.spotify.com/v1/artists/${currentSongId}`, { headers: headers }).then((response: AxiosResponse) => {
-                console.log('artist data ',response.data)
                 setFooterInfo({
                     title: footerInfo.title,
                     artist: footerInfo.artist,
@@ -62,7 +61,7 @@ const SpotifyData = (props: { access_token: string }) => {
     }, [access_token])
 
     return (
-        <div>
+        <div className='w-full'>
             {access_token ? 
             <NowPlayingFooter
                 FooterInfo={footerInfo}

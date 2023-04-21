@@ -8,6 +8,8 @@ import SpotifyData from '@/components/SpotifyData'
 import { usePathname, useSearchParams,useParams } from 'next/navigation';
 import { useEffect, useState } from 'react'
 import NowPlayingFooter from '@/components/NowPlayingFooter'
+import AlbumArt from '@/components/AlbumArt'
+import SongDetails from '@/components/SongDetails'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -20,12 +22,20 @@ export default function Home() {
   }, [])
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between bg-zinc-100">
+    <main className="flex min-h-screen flex-col items-center justify-between bg-gradient-to-t from-slate-950 to-slate-800">
+      <Link href='/redirect'>authenticate</Link>
       <div className="flex flex-col items-center justify-center">
         <h1>What genre is this?</h1>
         <Search/>
       </div>
-      <Link href='/redirect'>authenticate</Link>
+      <div className='flex flex-row items-center justify-around max-w-6xl flex-wrap text-slate-50 w-full'>
+      <SongDetails
+        artist = 'The Weeknd'
+        album = 'Blinding Lights'
+        genres = {['pop', 'r&b', 'hip-hop']}
+      />
+      <AlbumArt artUrl = 'https://i.scdn.co/image/ab67616d0000b273f4a62582de18a4e4e071812c'/>
+      </div>
       {access_token && <SpotifyData access_token = {access_token} />}
       
     </main>

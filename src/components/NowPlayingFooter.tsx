@@ -3,10 +3,10 @@ import Image from "next/image";
 
 export default function NowPlayingFooter(props: {FooterInfo: FooterInfo}) {
     const { FooterInfo } = props
-    console.log('footerInfo', FooterInfo)
+    console.log(FooterInfo.albumArt)
     return(
-            <div className="sticky bottom-0 flex flex-row items-center justify-betwen w-full pr-10 py-2 rounded-t-lg drop-shadow-[-2_5px_5px_rgba(0,0,0,0.25)] h-24 bg-white max-w-[800px]">
-            {FooterInfo.albumArt ? <Image width={600} height={160} src={FooterInfo.albumArt} alt="album art" className="w-24 h-24 rounded-tl-lg"/> : null}
+            <div className="sticky bottom-0 flex flex-row items-center justify-betwen w-full pr-10 py-2 rounded-t-lg drop-shadow-[-2_5px_5px_rgba(0,0,0,0.25)] h-24 bg-white max-w-[800px] mx-auto">
+            {FooterInfo.albumArt ? <Image width={600} height={600} src={FooterInfo.albumArt} alt="album art" className="w-24 h-24 rounded-tl-lg"/> : null}
             <div className="px-3 text-slate-600 ">
                 <p className="text-gray-800">{FooterInfo.title}</p>
                 <p className="text-gray-800">{FooterInfo.artist}</p>
