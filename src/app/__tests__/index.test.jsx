@@ -9,10 +9,9 @@ jest.mock('next/router', () => ({
   }))
   
 describe('Home', () => {
-    useRouter.mockReturnValue({ query: {}})
+    
   it('Has Welcome Text', () => {
     act(() => {
-        useRouter.mockReturnValue({ query: {}})
         render(<Home />)
         const welcomeText = screen.getByText( 'What genre is this?')
     })
