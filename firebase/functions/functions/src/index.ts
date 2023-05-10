@@ -23,7 +23,7 @@ const spotifyClientId = defineSecret("spotify_client_id");
 // define spotify client secret
 const spotifyClientSecret = defineSecret("spotify_client_secret");
 
-exports.SpotifyAuth = onRequest({cors: [/firebase\.com$/, "http://localhost:3003"], secrets: [spotifyClientId, spotifyClientSecret]}, (req, res) => {
+exports.SpotifyAuth = onRequest({cors: ["http://localhost:3000", "localhost:3000"]}, (req, res) => {
   const authOptions = {
     url: "https://accounts.spotify.com/api/token",
     headers: {
@@ -40,23 +40,10 @@ exports.SpotifyAuth = onRequest({cors: [/firebase\.com$/, "http://localhost:3003
     logger.info("error!!" + error, {structuredData: true});
     logger.info("posted authOptions", authOptions, response, body, error, {structuredData: true});
     if (!error && response.statusCode === 200) {
-      // use the access token to access the Spotify Web API
-      const token = body.access_token;
-      const options = {
-        url: "https://api.spotify.com/v1/users/jmperezperez",
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-        json: true,
-      };
-      request.get(options, function(error, response, body) {
-        console.log(response, body, error);
-        logger.info(response, body, error, {structuredData: true});
-        // response.send(body);
-        res.send(`Hello from Firebase! -Ethan test ${spotifyClientId.value()}, ${spotifyClientSecret.value()}, ${token}, ${response}, ${body}, ${error}`);
-      });
+      // return the access token in the response
+      res.send(response);
     } else {
-        res.send(`Error: ${error}`);
+        res.send(error);
     }
   });
 });
