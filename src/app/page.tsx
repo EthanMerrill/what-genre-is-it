@@ -11,6 +11,9 @@ import NowPlayingFooter from '@/components/NowPlayingFooter'
 import AlbumArt from '@/components/AlbumArt'
 import SongDetails from '@/components/SongDetails'
 import { AppContext } from '@/context/state'
+import axios, { AxiosResponse } from 'axios';
+import FooterInfo from '@/types/footerInfo.interface';
+
 
 export default function Home() {
 
@@ -23,6 +26,7 @@ export default function Home() {
     appContext.setSpotifyUserAuthCode(window.location.hash.split('&')[0].split('=')[1])
     setAccessToken(window.location.hash.split('&')[0].split('=')[1])
   }, [])
+
   
     // temp call to cloud function to get access token
     useEffect(() => {
@@ -41,8 +45,7 @@ export default function Home() {
     }, [])
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between bg-gradient-to-t from-slate-950 to-slate-800">
-      <Link href='/redirect'>authenticate</Link>
+    <main  className="flex min-h-max flex-col items-center justify-between w-full">
       <div className="flex flex-col items-center justify-center">
         <h1>What genre is this?</h1>
         <Search />
@@ -55,7 +58,8 @@ export default function Home() {
         />
         <AlbumArt artUrl='https://i.scdn.co/image/ab67616d0000b273f4a62582de18a4e4e071812c' />
       </div>
-      {access_token && <SpotifyData access_token={access_token} />}
+      
+
 
     </main>
   )

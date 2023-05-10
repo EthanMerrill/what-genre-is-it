@@ -62,11 +62,6 @@ const SpotifyData = (props: { access_token: string }) => {
 
     return (
         <div className='w-full'>
-            {access_token ? 
-            <NowPlayingFooter
-                FooterInfo={footerInfo}
-            />
-            : null}
         </div>
     )
 }

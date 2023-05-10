@@ -1,3 +1,4 @@
+import NowPlayingFooter from '@/components/NowPlayingFooter'
 import './globals.css'
 import AppContextProvider from '@/context/state'
 
@@ -14,7 +15,11 @@ export default function RootLayout({
   return (
     <AppContextProvider>
       <html lang="en">
-        <body>{children}</body>
+        <body className="flex min-h-screen flex-col items-center justify-between bg-gradient-to-t from-slate-950 to-slate-800">
+          {children}
+          <NowPlayingFooter />
+        </body>
+        
       </html>
     </AppContextProvider>
   )
