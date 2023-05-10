@@ -1,8 +1,61 @@
 import Turnstone from 'turnstone'
-import turnstoneStyles from '../styles/turnstoneStyles.js'
+import turnstoneStyles from '@/styles/turnstoneStyles.js'
 import { useRouter } from 'next/navigation.js'
-import { useContext, useEffect, useState } from 'react'
+import { use, useContext, useEffect, useState } from 'react'
 import { AppContext } from '@/context/state'
+import Image from 'next/image'
+
+
+ // Custom Item component
+ const Item = (props: any) => {
+    const {
+        appearsInDefaultListbox,
+        index,
+        item,
+        query,
+        searchType = 'startswith',
+        setSelected,
+        totalItems
+      } = props
+      console.log(item, props)
+
+    return (
+        <div className='bg-white'>
+            <Image alt={`cover art for ${item.album.name}`} src={item.album.images[0].url} width={50} height={50} />
+            {item.name} | {item.artists[0].name}
+        </div>
+    )
+}
+
+
+const listbox = (spotifyToken:string) =>  [
+    {
+        id: 'songs',
+        name: 'Songs',
+        ratio: 8,
+        displayField: 'name',
+        data: (query: string) =>
+            fetch('https://api.spotify.com/v1/search?q=' + encodeURIComponent(query) + '&type=track&limit=5', {
+                method: 'GET',
+                headers: {
+                    "Authorization": "Bearer " + spotifyToken
+                }
+            }).then(res => { return res.json() })
+                .then(data => {
+                    data.tracks.items.map((item: any) => {
+                        return {
+                            id: item.id,
+                            name: item.name,
+                            artist: item.artists[0].name,
+                            album: item.album.name,
+                            image: item.album.images[0].url
+                        }
+                    })
+                    return data.tracks.items
+                }),
+        searchType: 'startswith'
+    }
+]
 
 export default function Search() {
 
@@ -14,47 +67,6 @@ export default function Search() {
     const appContext = useContext(AppContext)
     const spotifyToken = appContext.spotifyToken
 
-    const listbox = [
-        {
-            id: 'songs',
-            name: 'Songs',
-            ratio: 8,
-            displayField: 'name',
-            data: (query: string) =>
-                fetch('https://api.spotify.com/v1/search?q=' + encodeURIComponent(query) + '&type=track&limit=5', {
-                    method: 'GET',
-                    headers: {
-                        "Authorization": "Bearer " + spotifyToken
-                    }
-                }).then(res => { return res.json() })
-                    .then(data => {
-                        data.tracks.items.map((item: any) => {
-                            return {
-                                id: item.id,
-                                name: item.name,
-                                artist: item.artists[0].name,
-                                album: item.album.name,
-                                image: item.album.images[0].url
-                            }
-                        })
-                        return data.tracks.items
-                    }),
-            searchType: 'startswith'
-        }
-    ]
-
-    // useEffect(() => {
-    //     if (query) {
-    //         fetch('https://api.spotify.com/v1/search?q=' + query + '&type=track', {
-    //             method: 'GET',
-    //             headers: {
-    //                 "Authorization": "Bearer " + spotifyToken
-    //             }
-    //         })
-    //             .then(res => res.json())
-    //             .then(data => setResults(data.tracks.items))
-    //     }
-    // }, [query])
 
     return (
         <Turnstone
@@ -62,11 +74,12 @@ export default function Search() {
             styles={turnstoneStyles}
             placeholder="Search for a song"
             onEnter={async (query: string) => {
-                router.push('/search/' + query)
+                router.push('/song/' + query.replaceAll(' ', '-'))
             }}
             debounceWait={250}
-            listbox={listbox}
+            listbox={listbox(spotifyToken)}
             typeahead={true}
+            Item={Item}
         />
     )
 }
