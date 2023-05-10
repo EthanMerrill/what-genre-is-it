@@ -6,34 +6,39 @@ import Search from '@/components/Search'
 import Link from 'next/link'
 import SpotifyData from '@/components/SpotifyData'
 import { usePathname, useSearchParams, useParams } from 'next/navigation';
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import NowPlayingFooter from '@/components/NowPlayingFooter'
 import AlbumArt from '@/components/AlbumArt'
 import SongDetails from '@/components/SongDetails'
-
-const inter = Inter({ subsets: ['latin'] })
+import { AppContext } from '@/context/state'
 
 export default function Home() {
 
   const [access_token, setAccessToken] = useState<string | null>(null)
 
+  const appContext = useContext(AppContext)
+  
+
   useEffect(() => {
+    appContext.setSpotifyUserAuthCode(window.location.hash.split('&')[0].split('=')[1])
     setAccessToken(window.location.hash.split('&')[0].split('=')[1])
   }, [])
-
-  // temp call to cloud function to get access token
-  useEffect(() => {
-    fetch('https://spotifyauth-zwxcnyjcja-uc.a.run.app', {
-      method: 'GET',
-      headers: {
-        'Access-Control-Allow-Origin': 'http://localhost:3000',
-        'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
-      },
-      mode: 'cors',
-    })
-      .then(res => res.json())
-      .then(data => console.log(data))
-  }, [])
+  
+    // temp call to cloud function to get access token
+    useEffect(() => {
+      fetch('https://spotifyauth-zwxcnyjcja-uc.a.run.app', {
+        method: 'GET',
+        headers: {
+          'Access-Control-Allow-Origin': 'http://localhost:3000',
+          'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
+        },
+        mode: 'cors',
+      })
+        .then(res => res.json())
+        .then(data => {appContext.setSpotifyToken(data.body.access_token)
+        })
+        
+    }, [])
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between bg-gradient-to-t from-slate-950 to-slate-800">

@@ -1,4 +1,5 @@
 import './globals.css'
+import AppContextProvider from '@/context/state'
 
 export const metadata = {
   title: 'What Genre Is This?',
@@ -11,8 +12,10 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body>{children}</body>
-    </html>
+    <AppContextProvider>
+      <html lang="en">
+        <body>{children}</body>
+      </html>
+    </AppContextProvider>
   )
 }
