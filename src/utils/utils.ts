@@ -10,22 +10,22 @@ export const useRandomString = (length: number) => {
   return randomString;
 };
 
-export const getGenre = (accessToken: string, id: string) => {
-  const data = axios
-    .get(`https://api.spotify.com/v1/browse/categories/${id}/playlists`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    })
-    .then((response) => {
-      console.log(response.data);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+// export const getGenre = (accessToken: string, id: string) => {
+//   const data = axios
+//     .get(`https://api.spotify.com/v1/browse/categories/${id}/playlists`, {
+//       headers: {
+//         Authorization: `Bearer ${accessToken}`,
+//       },
+//     })
+//     .then((response) => {
+//       console.log(response.data);
+//     })
+//     .catch((error) => {
+//       console.log(error);
+//     });
 
-  return data;
-};
+//   return data;
+// };
 
 export const getFooterData = async (user_access_token: string) => {
   let footerInfo = {} as FooterInfo;
@@ -50,3 +50,15 @@ export const getFooterData = async (user_access_token: string) => {
   console.log( footerInfo);
   return footerInfo;
 };
+
+export const getTrackData = async (user_access_token: string, trackId:string) => {
+  const headers = {
+    Authorization: "Bearer " + user_access_token,
+  };
+  // get song information
+  const songDetails = await fetch(`https://api.spotify.com/v1/tracks/${trackId}`, {
+    headers: headers,
+  })
+  const data = await songDetails.json();
+  return data;
+}

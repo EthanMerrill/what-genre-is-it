@@ -1,6 +1,7 @@
 import NowPlayingFooter from '@/components/NowPlayingFooter'
 import './globals.css'
 import AppContextProvider from '@/context/state'
+import SearchHeader from '@/components/SearchHeader'
 
 export const metadata = {
   title: 'What Genre Is This?',
@@ -15,7 +16,8 @@ export default function RootLayout({
   return (
     <AppContextProvider>
       <html lang="en">
-        <body className="flex min-h-screen flex-col items-center justify-between bg-gradient-to-t from-slate-950 to-slate-800">
+        <body className="h-screen bg-gradient-to-t from-slate-950 to-slate-800">
+          <SearchHeader/>
           {children}
           <NowPlayingFooter />
         </body>

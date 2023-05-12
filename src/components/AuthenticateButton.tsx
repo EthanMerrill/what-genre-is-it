@@ -5,7 +5,7 @@ import { NextResponse } from 'next/server';
 import Link from 'next/link'
 import {useRandomString} from '@/utils/utils'
 
-const Redirect = () => {
+const AuthenticateButton = () => {
     
     
     const state = useRandomString(16);
@@ -32,11 +32,15 @@ const Redirect = () => {
     localStorage.setItem(stateKey, state);
 
     return (
-        <div>
-            <a href = {url}>Authenticate</a>
-        </div>
+        <div className="flex align-baseline align-items-baseline  rounded-lg border-2 border-slate-600 px-4 py-1 h-8 text-sm w-[200px] mx-auto">
+        <p className="text-slate-600 font-medium h-5 w-fit whitespace-nowrap ">
+            <Link href={url}>
+                Authenticate with Spotify
+            </Link>
+        </p>
+    </div>
     )
     
 }
 
-export default Redirect;
+export default AuthenticateButton;

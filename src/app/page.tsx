@@ -45,12 +45,10 @@ export default function Home() {
     }, [])
 
   return (
-    <main  className="flex min-h-max flex-col items-center justify-between w-full">
+    <main >
       <div className="flex flex-col items-center justify-center">
-        <h1>What genre is this?</h1>
-        <Search />
       </div>
-      <div className='flex flex-row items-center justify-around max-w-6xl flex-wrap text-slate-50 w-full'>
+      <div className=' flex flex-row items-center justify-around max-w-6xl flex-wrap text-slate-50 w-full'>
         <SongDetails
           artist='The Weeknd'
           album='Blinding Lights'

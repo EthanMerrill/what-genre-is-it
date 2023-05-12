@@ -4,34 +4,30 @@ import { useRouter } from 'next/navigation.js'
 import { use, useContext, useEffect, useState } from 'react'
 import { AppContext } from '@/context/state'
 import Image from 'next/image'
+import Link from 'next/link'
 
 
- // Custom Item component
- const Item = (props: any) => {
+// Custom Item component
+const Item = (props: any) => {
+    const appContext = useContext(AppContext)
+    const setSearchedSongId = appContext.setSearchedSongId
+
     const {
-        appearsInDefaultListbox,
-        index,
-        item,
-        query,
-        searchType = 'startswith',
-        setSelected,
-        totalItems
-      } = props
-      console.log(item, props)
-
+        item
+    } = props
     return (
-        <div className='bg-white'>
-            <Image alt={`cover art for ${item.album.name}`} src={item.album.images[0].url} width={50} height={50} />
-            {item.name} | {item.artists[0].name}
-        </div>
+            <div id={item.id} className='bg-gray-800 rounded-md flex hover:bg-gray-700 mx-1'>
+                <Image className='rounded-l-md' alt={`cover art for ${item.album.name}`} src={item.album.images[0].url} width={50} height={50} />
+                <p className='text-white text-md my-auto mx-4'>{item.name} | {item.artists[0].name}</p>
+            </div>
     )
 }
 
 
-const listbox = (spotifyToken:string) =>  [
+const listbox = (spotifyToken: string) => [
     {
-        id: 'songs',
-        name: 'Songs',
+        // id: 'songs',
+        // name: 'Songs',
         ratio: 8,
         displayField: 'name',
         data: (query: string) =>
@@ -66,7 +62,7 @@ export default function Search() {
 
     const appContext = useContext(AppContext)
     const spotifyToken = appContext.spotifyToken
-
+    const setSearchedSongId = appContext.setSearchedSongId
 
     return (
         <Turnstone
@@ -75,6 +71,13 @@ export default function Search() {
             placeholder="Search for a song"
             onEnter={async (query: string) => {
                 router.push('/song/' + query.replaceAll(' ', '-'))
+            }}
+            onChange={async (query: string) => {
+                setQuery(query)
+            }}
+            onSelect={async (query: any) => {
+                setSearchedSongId(query.id)
+                router.push('/song/' + query.name.replaceAll(' ', '-'))
             }}
             debounceWait={250}
             listbox={listbox(spotifyToken)}
