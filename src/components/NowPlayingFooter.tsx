@@ -7,6 +7,7 @@ import { use, useContext, useState, useEffect } from 'react';
 import { getFooterData } from '@/utils/utils';
 import Link from 'next/link'
 import AuthenticateButton from './AuthenticateButton';
+import GenreChip from './GenreChip';
 
 export default function NowPlayingFooter() {
 
@@ -33,6 +34,7 @@ export default function NowPlayingFooter() {
             <div className="fixed bottom-0 w-full">
                 <div className='flex flex-row items-center justify-betwen w-full pr-10 py-2 rounded-t-lg drop-shadow-[-2_5px_5px_rgba(0,0,0,0.25)] h-24 bg-white max-w-[800px] mx-auto'>
                     <div className='w-full'>
+                        <p className='px-auto w-full text-center py-2 text-sm text-slate-700'>To view the genre of what you're currently listening to: </p>
                         <AuthenticateButton />
                     </div>
                 </div>
@@ -53,12 +55,10 @@ export default function NowPlayingFooter() {
                     <p className="text-gray-800">{FooterInfo.artist}</p>
                 </div>
                 {/* tag */}
-                <div className="flex flex-row  gap-2 items-center flex-wrap">
+                <div className="flex flex-row gap-2 items-center flex-wrap">
                     {FooterInfo.genre && FooterInfo?.genre.map((genre, index) => {
                         return (
-                            <div key={index} className="flex align-baseline align-items-baseline bg-green-800 rounded-full border-solid px-4 py-1 h-8 text-sm">
-                                <p className="text-white h-5 w-fit whitespace-nowrap align-baseline">{genre}</p>
-                            </div>
+                            <GenreChip key={index} genre={genre} index={index} />
                         )
                     })}
                 </div>

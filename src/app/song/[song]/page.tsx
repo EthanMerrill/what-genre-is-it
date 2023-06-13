@@ -5,7 +5,7 @@ import { AppContext } from '@/context/state';
 import SongDetails from "@/components/SongDetails";
 import AlbumArt from "@/components/AlbumArt";
 import { useEffect } from "react";
-import { getTrackData } from "@/utils/utils";
+import { getTrackData, getArtistData} from "@/utils/utils";
 
 export default function SongPage({ params }: { params: { slug: string } }) {
 
@@ -13,6 +13,7 @@ export default function SongPage({ params }: { params: { slug: string } }) {
     const access_token = appContext.spotifyToken
     const searchedSongId = appContext.searchedSongId
     const [trackData, setTrackData] = useState<any>(null)
+    const [genres, setGenres] = useState<string[]>([])
 
     // get details of searched song
     const headers = {
@@ -23,20 +24,29 @@ export default function SongPage({ params }: { params: { slug: string } }) {
         getTrackData(access_token, searchedSongId)
         .then((data) => {
             setTrackData(data)
-            console.log(data)
         })
     }, [access_token, searchedSongId])
 
+    // call spotify api to get genre details
+    useEffect(() => {
+        if (trackData) {
+            getArtistData(access_token, trackData?.artists[0].id)
+            .then((data:any) => {
+                setGenres(data.genres)
+            })
+        }
+    }, [access_token, trackData])
+
     return (
-        <div>
-            <div className='flex flex-row items-center justify-around max-w-6xl flex-wrap text-slate-50 w-full'>
+        <div className='h-[70%] w-full'>
+            <div className='my-auto flex flex-row h-full items-center justify-around max-w-6xl flex-wrap text-slate-50 mx-auto'>
                 {/* only render song details if trackData is defined */}
                 {trackData && (
                     <>
                     <SongDetails
                         artist= {trackData?.artists[0].name}
                         album={trackData?.album.name}
-                        genres={trackData?.genres}
+                        genres={genres}
                     />
                     <AlbumArt artUrl={trackData?.album?.images[0].url} />
                     </>

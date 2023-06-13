@@ -17,7 +17,9 @@ export default function RootLayout({
     <AppContextProvider>
       <html lang="en">
         <body className="h-screen bg-gradient-to-t from-slate-950 to-slate-800">
-          <SearchHeader/>
+          <div className='max-w-[800px] mx-auto px-5'>
+            <SearchHeader/>
+          </div>
           {children}
           <NowPlayingFooter />
         </body>

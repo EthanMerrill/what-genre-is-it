@@ -1,19 +1,8 @@
 'use client'
 
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-import Search from '@/components/Search'
-import Link from 'next/link'
-import SpotifyData from '@/components/SpotifyData'
-import { usePathname, useSearchParams, useParams } from 'next/navigation';
 import { useContext, useEffect, useState } from 'react'
-import NowPlayingFooter from '@/components/NowPlayingFooter'
-import AlbumArt from '@/components/AlbumArt'
-import SongDetails from '@/components/SongDetails'
 import { AppContext } from '@/context/state'
-import axios, { AxiosResponse } from 'axios';
-import FooterInfo from '@/types/footerInfo.interface';
-
+import HomeHero from '@/components/HomeHero'
 
 export default function Home() {
 
@@ -49,12 +38,7 @@ export default function Home() {
       <div className="flex flex-col items-center justify-center">
       </div>
       <div className=' flex flex-row items-center justify-around max-w-6xl flex-wrap text-slate-50 w-full'>
-        <SongDetails
-          artist='The Weeknd'
-          album='Blinding Lights'
-          genres={['pop', 'r&b', 'hip-hop']}
-        />
-        <AlbumArt artUrl='https://i.scdn.co/image/ab67616d0000b273f4a62582de18a4e4e071812c' />
+        <HomeHero />
       </div>
       
 

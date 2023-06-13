@@ -1,18 +1,30 @@
-
+import GenreChip from "./GenreChip"
 
 export default function SongDetails(props: { artist: string, album: string, genres: string[]}) {
 
     const { artist, album, genres } = props
+    console.log(genres)
 
     return (
-        <div className=''>
-            <div>
-                <h2>Artist</h2>
-                <p>{artist}</p>
+        <div className='max-w-[500px]'>
+            <div className="flex flex-row">
+                <h1 className="text-slate-200 pr-2">Artist </h1>
+                <p className="font-bold">{artist}</p>
+            </div>
+            <div className="flex flex-row">
+                <h1 className="text-slate-200 pr-2">Album</h1>
+                <p className="font-bold">{album}</p>
             </div>
             <div>
-                <h2>Album</h2>
-                <p>{album}</p>
+                <h1>Genres</h1>
+                <div className=" mt-2 flex flex-row gap-2 items-center flex-wrap">
+                {genres.length>0 && (genres.map((genre, index) => {
+                    return (
+                        <GenreChip key={index} genre={genre} index={index} />
+                    )
+                }))
+                }
+            </div>
             </div>
         </div>
     )

@@ -16,6 +16,15 @@
   }
 }
 
+@keyframes wave {
+  0% {
+    background-position-x: 1000px;
+  }
+  100% {
+    background-position-x: 0px;
+  }
+}
+
 body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
@@ -25,3 +34,4 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+

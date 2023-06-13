@@ -72,12 +72,14 @@ export default function Search() {
             onEnter={async (query: string) => {
                 router.push('/song/' + query.replaceAll(' ', '-'))
             }}
-            onChange={async (query: string) => {
-                setQuery(query)
-            }}
+            // onChange={async (query: string) => {
+            //     setQuery(query)
+            // }}
             onSelect={async (query: any) => {
-                setSearchedSongId(query.id)
-                router.push('/song/' + query.name.replaceAll(' ', '-'))
+                if(query) {
+                setSearchedSongId(query?.id)
+                router.push('/song/' + query?.name.replaceAll(' ', '-'))
+                }
             }}
             debounceWait={250}
             listbox={listbox(spotifyToken)}

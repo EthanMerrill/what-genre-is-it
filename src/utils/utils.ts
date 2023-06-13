@@ -10,23 +10,6 @@ export const useRandomString = (length: number) => {
   return randomString;
 };
 
-// export const getGenre = (accessToken: string, id: string) => {
-//   const data = axios
-//     .get(`https://api.spotify.com/v1/browse/categories/${id}/playlists`, {
-//       headers: {
-//         Authorization: `Bearer ${accessToken}`,
-//       },
-//     })
-//     .then((response) => {
-//       console.log(response.data);
-//     })
-//     .catch((error) => {
-//       console.log(error);
-//     });
-
-//   return data;
-// };
-
 export const getFooterData = async (user_access_token: string) => {
   let footerInfo = {} as FooterInfo;
 
@@ -61,4 +44,14 @@ export const getTrackData = async (user_access_token: string, trackId:string) =>
   })
   const data = await songDetails.json();
   return data;
+}
+
+export const getArtistData = async (user_access_token: string, artistId:string) => {
+  const headers = {
+    Authorization: "Bearer " + user_access_token,
+  };
+  // get song information
+  const genre = await fetch(`https://api.spotify.com/v1/artists/${artistId}`, { headers: headers });
+  const genreData = await genre.json();
+  return genreData;
 }

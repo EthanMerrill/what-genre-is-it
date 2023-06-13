@@ -10,7 +10,7 @@ export default function AlbumArt(props: {artUrl: string}) {
                 alt="album art"
                 width={600}
                 height={600}
-                className='w-[300px] h-[300px] drop-shadow-3xl rounded-md'
+                className='w-[300px] h-[300px] drop-shadow-2xl rounded-md'
             />
         </div>
     )
