@@ -28,8 +28,6 @@ const AuthenticateButton = () => {
         url += '&redirect_uri=' + encodeURIComponent(redirect_uri);
         url += '&state=' + encodeURIComponent(state);
 
-    var stateKey = 'spotify_auth_state';
-    localStorage.setItem(stateKey, state);
 
     return (
         <div className="flex align-baseline align-items-baseline  rounded-lg border-2 border-slate-600 px-4 py-1 h-8 text-sm w-[200px] mx-auto">
