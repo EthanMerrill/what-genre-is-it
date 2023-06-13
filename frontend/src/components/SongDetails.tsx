@@ -6,14 +6,15 @@ export default function SongDetails(props: { artist: string, album: string, genr
     console.log(genres)
 
     return (
+        
         <div className='max-w-[500px]'>
             <div className="flex flex-row">
                 <h1 className="text-slate-200 pr-2">Artist </h1>
-                <p className="font-bold">{artist}</p>
+                <p className="font-bold animate-fade">{artist}</p>
             </div>
             <div className="flex flex-row">
                 <h1 className="text-slate-200 pr-2">Album</h1>
-                <p className="font-bold">{album}</p>
+                <p className="font-bold animate-fade">{album}</p>
             </div>
             <div>
                 <h1>Genres</h1>
@@ -27,5 +28,6 @@ export default function SongDetails(props: { artist: string, album: string, genr
             </div>
             </div>
         </div>
+        
     )
 }

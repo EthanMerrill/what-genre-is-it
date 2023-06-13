@@ -1,17 +1,17 @@
 import Image from "next/image"
 
-export default function AlbumArt(props: {artUrl: string}) {
+export default function AlbumArt(props: { artUrl: string }) {
     const { artUrl } = props
 
-    return(
-        <div>
-            <Image
-                src={artUrl}
-                alt="album art"
-                width={600}
-                height={600}
-                className='w-[300px] h-[300px] drop-shadow-2xl rounded-md'
-            />
-        </div>
+    return (
+            <div>
+                <Image
+                    src={artUrl}
+                    alt="album art"
+                    width={600}
+                    height={600}
+                    className='w-[300px] h-[300px] drop-shadow-2xl rounded-md animate-fade'
+                />
+            </div>
     )
 }

@@ -14,5 +14,18 @@ module.exports = {
       },
     },
   },
+        
+  animation: {
+    fade: 'fadeIn 1s ease-in-out',
+    fadeSlow: 'fadeIn 2s ease-in-out',
+  },
+
+  // that is actual animation
+  keyframes: theme => ({
+    fadeIn: {
+      '0%': { opacity: 0 },
+      '100%': { color: 1 },
+    },
+  }),
   plugins: [],
 }
