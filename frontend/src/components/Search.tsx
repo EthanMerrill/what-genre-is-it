@@ -16,7 +16,7 @@ const Item = (props: any) => {
         item
     } = props
     return (
-            <div id={item.id} className='bg-gray-800 rounded-md flex hover:bg-gray-700 mx-1'>
+            <div id={item.id} className='bg-gray-800 rounded-md flex hover:bg-gray-700 mx-1 my-2'>
                 <Image className='rounded-l-md' alt={`cover art for ${item.album.name}`} src={item.album.images[0].url} width={50} height={50} />
                 <p className='text-white text-md my-auto mx-4'>{item.name} | {item.artists[0].name}</p>
             </div>

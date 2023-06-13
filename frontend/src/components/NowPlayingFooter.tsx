@@ -58,7 +58,7 @@ export default function NowPlayingFooter() {
                 <div className="flex flex-row gap-2 items-center flex-wrap">
                     {FooterInfo.genre && FooterInfo?.genre.map((genre, index) => {
                         return (
-                            <GenreChip key={index} genre={genre} index={index} />
+                            <GenreChip key={index} genre={genre} index={index} size={1} />
                         )
                     })}
                 </div>

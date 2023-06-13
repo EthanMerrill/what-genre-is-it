@@ -15,14 +15,15 @@ export default function Home() {
     appContext.setSpotifyUserAuthCode(window.location.hash.split('&')[0].split('=')[1])
     setAccessToken(window.location.hash.split('&')[0].split('=')[1])
   }, [])
-
   
-    // temp call to cloud function to get access token
+  const redirectURI = process.env.NEXT_PUBLIC_REDIRECT_URI ? process.env.NEXT_PUBLIC_REDIRECT_URI:'';
+  
+  // temp call to cloud function to get access token
     useEffect(() => {
       fetch('https://spotifyauth-zwxcnyjcja-uc.a.run.app', {
         method: 'GET',
         headers: {
-          'Access-Control-Allow-Origin': 'http://localhost:3000',
+          'Access-Control-Allow-Origin': redirectURI,
           'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
         },
         mode: 'cors',
