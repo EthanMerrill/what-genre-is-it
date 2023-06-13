@@ -6,6 +6,7 @@ const nextConfig = {
   images: {
     domains: ['i.scdn.co'],
 },
+"exclude": ["./firebase/**/*"]
 }
 
 module.exports = nextConfig
