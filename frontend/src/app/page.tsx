@@ -16,7 +16,7 @@ export default function Home() {
     // setAccessToken(window.location.hash.split('&')[0].split('=')[1])
   }, [])
   
-  const redirectURI  = (process.env.NEXT_PUBLIC_REDIRECT_URI ? process.env.NEXT_PUBLIC_SPOTIFY_REDIRECT_URI:'') as string;
+  const redirectURI  = process.env.NEXT_PUBLIC_SPOTIFY_REDIRECT_URI as string;
   
   // temp call to cloud function to get access token
     useEffect(() => {

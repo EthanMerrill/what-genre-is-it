@@ -21,7 +21,7 @@ const request = require("request");
 const spotifyClientId = (0, params_1.defineSecret)("spotify_client_id");
 // define spotify client secret
 const spotifyClientSecret = (0, params_1.defineSecret)("spotify_client_secret");
-exports.SpotifyAuth = (0, https_1.onRequest)({ cors: ["http://localhost:3000", "localhost:3000", "https://what-genre-is-it.vercel.app"] }, (req, res) => {
+exports.SpotifyAuth = (0, https_1.onRequest)({ cors: [/what-genre-is-it\.vercel\.app$/, "http://localhost:3000", "localhost:3000", "https://what-genre-is-it-git-main-ethanmerrill.vercel.app/", "https://what-genre-is-it.vercel.app/", "https://www.whatgenreisthis.com/"] }, (req, res) => {
     const authOptions = {
         url: "https://accounts.spotify.com/api/token",
         headers: {
