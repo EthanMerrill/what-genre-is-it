@@ -23,7 +23,7 @@ const spotifyClientId = defineSecret("spotify_client_id");
 // define spotify client secret
 const spotifyClientSecret = defineSecret("spotify_client_secret");
 
-exports.SpotifyAuth = onRequest({cors: ["http://localhost:3000", "localhost:3000","https://what-genre-is-it.vercel.app/"]}, (req, res) => {
+exports.SpotifyAuth = onRequest({cors: ["http://localhost:3000", "localhost:3000", "https://what-genre-is-it.vercel.app"]}, (req, res) => {
   const authOptions = {
     url: "https://accounts.spotify.com/api/token",
     headers: {
@@ -36,7 +36,7 @@ exports.SpotifyAuth = onRequest({cors: ["http://localhost:3000", "localhost:3000
   };
   logger.info(authOptions, "request"+req, {structuredData: true});
 
-  request.post(authOptions, function(error, response, body) {
+  request.post(authOptions, function(error: string, response: { statusCode: number; }, body: any) {
     logger.info("error!!" + error, {structuredData: true});
     logger.info("posted authOptions", authOptions, response, body, error, {structuredData: true});
     if (!error && response.statusCode === 200) {
