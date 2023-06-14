@@ -1,19 +1,19 @@
-'use client'
+"use client"
 
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect } from 'react'
 import { AppContext } from '@/context/state'
 import HomeHero from '@/components/HomeHero'
 
 export default function Home() {
 
-  const [access_token, setAccessToken] = useState<string | null>(null)
+  // const [access_token, setAccessToken] = useState<string | null>(null)
 
   const appContext = useContext(AppContext)
   
 
   useEffect(() => {
     appContext.setSpotifyUserAuthCode(window.location.hash.split('&')[0].split('=')[1])
-    setAccessToken(window.location.hash.split('&')[0].split('=')[1])
+    // setAccessToken(window.location.hash.split('&')[0].split('=')[1])
   }, [])
   
   const redirectURI  = (process.env.NEXT_PUBLIC_REDIRECT_URI ? process.env.NEXT_PUBLIC_SPOTIFY_REDIRECT_URI:'') as string;
@@ -47,3 +47,4 @@ export default function Home() {
     </main>
   )
 }
+

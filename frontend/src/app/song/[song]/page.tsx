@@ -15,6 +15,7 @@ export default function SongPage({ params }: { params: { slug: string } }) {
     const [trackData, setTrackData] = useState<any>(null)
     const [genres, setGenres] = useState<string[]>([])
 
+
     // get details of searched song
     const headers = {
         Authorization: "Bearer " + access_token,

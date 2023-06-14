@@ -1,8 +1,6 @@
 import { TypeAnimation } from 'react-type-animation';
-import WaveformAnimation from './WaveformAnimation';
 
 export default function HomeHero() {
-
 
     return (
         <div className='w-full h-[400px] py-20'>
