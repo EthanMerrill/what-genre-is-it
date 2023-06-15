@@ -44,6 +44,7 @@ exports.SpotifyAuth = onRequest(
   res.header("Access-Control-Allow-Headers", "Content-Type");
   res.header("Access-Control-Allow-Methods", "PUT, GET, POST, DELETE, OPTIONS");
   res.header("Access-Control-Allow-Credentials", "true");
+  res.header("accept", "*/*");
   
   logger.info(authOptions, "request" + req, {structuredData: true});
 
@@ -59,41 +60,3 @@ exports.SpotifyAuth = onRequest(
   });
 });
 
-
-fetch("https://spotifyauth-zwxcnyjcja-uc.a.run.app/", {
-  "headers": {
-    "accept": "*/*",
-    "accept-language": "en-US,en;q=0.9",
-    "access-control-allow-headers": "Origin, X-Requested-With, Content-Type, Accept",
-    "referrer-policy": "origin",
-    "sec-ch-ua": "\"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"114\", \"Google Chrome\";v=\"114\"",
-    "sec-ch-ua-mobile": "?0",
-    "sec-ch-ua-platform": "\"macOS\"",
-    "sec-fetch-dest": "empty",
-    "sec-fetch-mode": "cors",
-    "sec-fetch-site": "cross-site"
-  },
-  "referrer": "http://localhost:3000/",
-  "referrerPolicy": "strict-origin-when-cross-origin",
-  "body": null,
-  "method": "GET",
-  "mode": "cors",
-  "credentials": "omit"
-});
-
-
-fetch("https://spotifyauth-zwxcnyjcja-uc.a.run.app/", {
-  "headers": {
-    "access-control-allow-headers": "Origin, X-Requested-With, Content-Type, Accept",
-    "access-control-allow-origin": "https://www.whatgenreisthis.com/",
-    "sec-ch-ua": "\"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"114\", \"Google Chrome\";v=\"114\"",
-    "sec-ch-ua-mobile": "?0",
-    "sec-ch-ua-platform": "\"macOS\""
-  },
-  "referrer": "https://www.whatgenreisthis.com/",
-  "referrerPolicy": "strict-origin-when-cross-origin",
-  "body": null,
-  "method": "GET",
-  "mode": "cors",
-  "credentials": "omit"
-});

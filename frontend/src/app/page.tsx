@@ -23,7 +23,9 @@ export default function Home() {
         headers: {
           // 'Access-Control-Allow-Origin': 'testing',
           'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
-          'Referrer-Policy': 'origin'
+          'Referrer-Policy': 'origin',
+          'Access-Control-Allow-Origin': '*',
+          'accept': '*/*',
         },
         mode: 'cors',
       })
