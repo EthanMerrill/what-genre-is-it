@@ -3,7 +3,7 @@
     "module": "commonjs",
     "noImplicitReturns": true,
     "noUnusedLocals": true,
-    "outDir": "src/lib",
+    "outDir": "lib",
     "sourceMap": true,
     "strict": true,
     "target": "es2017"
@@ -11,5 +11,5 @@
   "compileOnSave": true,
   "include": [
     "src"
-, "lib"  ]
+, "lib", "lib"  ]
 }

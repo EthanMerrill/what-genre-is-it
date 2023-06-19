@@ -23,31 +23,44 @@ const spotifyClientId = defineSecret("spotify_client_id");
 // define spotify client secret
 const spotifyClientSecret = defineSecret("spotify_client_secret");
 
-exports.SpotifyAuth = onRequest((req: any, res: any) => {
-  logger.info('REQUEST SENT', req, {structuredData: true})
-  res.set("Access-Control-Allow-Origin", "*");
+const allowedOrigins = ["https://www.whatgenreisthis.com", "https://www.localhost:3000", "https://localhost:3000"];
 
-  const authOptions = {
-    url: "https://accounts.spotify.com/api/token",
-    headers: {
-      Authorization: "Basic " + Buffer.from(spotifyClientId.value() + ":" + spotifyClientSecret.value()).toString("base64"),
-    },
-    form: {
-      grant_type: "client_credentials",
-    },
-    json: true,
-  };
+exports.SpotifyAuth = onRequest({cors: true}, (req: any, res: any) => {
 
-  logger.info(authOptions, "request" + req, {structuredData: true});
+  // if the origin is in the allowedOrigins array, set the Access-Control-Allow-Origin header to the origin
+  if (allowedOrigins.indexOf(req.get("origin")) > -1) {
+    res.set("Access-Control-Allow-Origin", req.get("origin"));
+  }
+  
+  if (req.method === "OPTIONS") {
+    // Send response to OPTIONS requests
+    res.set("Access-Control-Allow-Methods", "GET");
+    // res.set('Access-Control-Allow-Origin', 'https://whatgenreisthis.com')
+    // res.set('Access-Control-Allow-Headers', 'Content-Type');
+    res.set("Access-Control-Max-Age", "3600");
+    res.status(204).send("");
+  } else {
+    // get the token from spotify
+    const authOptions = {
+      url: "https://accounts.spotify.com/api/token",
+      headers: {
+        Authorization: "Basic " + Buffer.from(spotifyClientId.value() + ":" + spotifyClientSecret.value()).toString("base64"),
+      },
+      form: {
+        grant_type: "client_credentials",
+      },
+      json: true,
+    };
 
-  request.post(authOptions, function (error: string, response: {statusCode: number}, body: any) {
-    logger.info("posted authOptions", authOptions, response, body, error, {structuredData: true});
-    if (!error && response.statusCode === 200) {
-      // return the access token in the response
-      res.status(200).send(response);
-    } else {
-      logger.info("error!!" + error, {structuredData: true});
-      res.send(error);
-    }
-  });
+    request.post(authOptions, function (error: string, response: {statusCode: number}, body: any) {
+      logger.info("posted authOptions", authOptions, response, body, error, {structuredData: true});
+      if (!error && response.statusCode === 200) {
+        // return the access token in the response
+        res.status(200).send(response);
+      } else {
+        logger.info("error!!" + error, {structuredData: true});
+        res.send(error);
+      }
+    });
+  }
 });
