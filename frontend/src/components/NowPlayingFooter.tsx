@@ -34,7 +34,7 @@ export default function NowPlayingFooter() {
             <div className="fixed bottom-0 w-full">
                 <div className='flex flex-row items-center justify-betwen w-full pr-10 py-2 rounded-t-lg drop-shadow-[-2_5px_5px_rgba(0,0,0,0.25)] h-24 bg-white max-w-[800px] mx-auto'>
                     <div className='w-full'>
-                        <p className='px-auto w-full text-center py-2 text-sm text-slate-700'>To view the genre of what you are currently listening to: </p>
+                        <p className='px-auto w-full text-center py-2 text-sm text-slate-700'>To view the genre of what is currently playing: </p>
                         <AuthenticateButton />
                     </div>
                 </div>

@@ -12,9 +12,8 @@
 
 import * as logger from "firebase-functions/logger";
 import {defineSecret} from "firebase-functions/params";
-const { onRequest } = require("firebase-functions/v2/https");
 import request = require("request");
-// const cors = require("cors")({origin: true});
+const {onRequest} = require("firebase-functions/v2/https");
 
 // Start writing functions
 // https://firebase.google.com/docs/functions/typescript
@@ -24,9 +23,9 @@ const spotifyClientId = defineSecret("spotify_client_id");
 // define spotify client secret
 const spotifyClientSecret = defineSecret("spotify_client_secret");
 
-exports.SpotifyAuth = onRequest(
-  {cors: ["http://localhost:3000", "localhost:3000", "https://www.whatgenreisthis.com","https://www.whatgenreisthis.com/", "http://www.whatgenreisthis.com", "www.whatgenreisthis.com"]},
-  (req:any, res:any) => {
+exports.SpotifyAuth = onRequest((req: any, res: any) => {
+  logger.info('REQUEST SENT', req, {structuredData: true})
+  res.set("Access-Control-Allow-Origin", "*");
 
   const authOptions = {
     url: "https://accounts.spotify.com/api/token",
@@ -39,24 +38,16 @@ exports.SpotifyAuth = onRequest(
     json: true,
   };
 
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "X-Requested-With");
-  res.header("Access-Control-Allow-Headers", "Content-Type");
-  res.header("Access-Control-Allow-Methods", "PUT, GET, POST, DELETE, OPTIONS");
-  res.header("Access-Control-Allow-Credentials", "true");
-  res.header("accept", "*/*");
-  
   logger.info(authOptions, "request" + req, {structuredData: true});
 
   request.post(authOptions, function (error: string, response: {statusCode: number}, body: any) {
-    logger.info("error!!" + error, {structuredData: true});
     logger.info("posted authOptions", authOptions, response, body, error, {structuredData: true});
     if (!error && response.statusCode === 200) {
       // return the access token in the response
-      res.send(response);
+      res.status(200).send(response);
     } else {
+      logger.info("error!!" + error, {structuredData: true});
       res.send(error);
     }
   });
 });
-

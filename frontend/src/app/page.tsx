@@ -26,6 +26,9 @@ export default function Home() {
           'Referrer-Policy': 'origin',
           'Access-Control-Allow-Origin': '*',
           'accept': '*/*',
+          "sec-fetch-dest": "empty",
+          "sec-fetch-mode": "cors",
+          "sec-fetch-site": "cross-site",
         },
         mode: 'cors',
       })
