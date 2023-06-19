@@ -14,12 +14,6 @@ const AuthenticateButton = () => {
     const redirect_uri = process.env.NEXT_PUBLIC_SPOTIFY_REDIRECT_URI as string;
     const scope = encodeURIComponent('user-read-currently-playing user-read-recently-played')
 
-    console.log(`
-        client_id: ${client_id}
-        client_secret: ${client_secret}
-        redirect_uri: ${redirect_uri}
-        scope: ${scope}
-        `)
 
         var url = 'https://accounts.spotify.com/authorize';
         url += '?response_type=token';

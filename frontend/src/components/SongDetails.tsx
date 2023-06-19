@@ -1,13 +1,16 @@
 import GenreChip from "./GenreChip"
 
-export default function SongDetails(props: { artist: string, album: string, genres: string[]}) {
+export default function SongDetails(props: {song:string, artist: string, album: string, genres: string[]}) {
 
-    const { artist, album, genres } = props
-    console.log(genres)
+    const { song, artist, album, genres } = props
 
     return (
         
-        <div className='max-w-[500px]'>
+        <div className='max-w-[500px] px-5'>
+            <div className="flex flex-row">
+                <h1 className="text-slate-200 pr-2">Song </h1>
+                <p className="font-bold animate-fade">{song}</p>
+            </div>
             <div className="flex flex-row">
                 <h1 className="text-slate-200 pr-2">Artist </h1>
                 <p className="font-bold animate-fade">{artist}</p>

@@ -13,7 +13,6 @@ export default function Home() {
 
   useEffect(() => {
     appContext.setSpotifyUserAuthCode(window.location.hash.split('&')[0].split('=')[1])
-    // setAccessToken(window.location.hash.split('&')[0].split('=')[1])
   }, [])
   
   // temp call to cloud function to get access token

@@ -45,6 +45,7 @@ export default function SongPage({ params }: { params: { slug: string } }) {
                 {trackData && (
                     <>
                     <SongDetails
+                        song={trackData?.name}
                         artist= {trackData?.artists[0].name}
                         album={trackData?.album.name}
                         genres={genres}

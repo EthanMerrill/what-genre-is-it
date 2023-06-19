@@ -44,7 +44,6 @@ const SpotifyData = (props: { access_token: string }) => {
         if (access_token) {
             axios.get(`https://api.spotify.com/v1/me/player/currently-playing`, { headers: headers })
                 .then((response: AxiosResponse) => {
-                    console.log('songData', response.data)
                     setFooterInfo({
                         title: response.data.item.name,
                         artist: response.data.item.artists[0].name,

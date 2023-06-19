@@ -30,7 +30,6 @@ export const getFooterData = async (user_access_token: string) => {
     albumArt: data.item.album.images[0].url,
     genre: genreData.genres,
   };
-  console.log( footerInfo);
   return footerInfo;
 };
 
