@@ -1,6 +1,7 @@
 import NowPlayingFooter from '@/components/NowPlayingFooter'
 import './globals.css'
 import AppContextProvider from '@/context/state'
+import { GoogleAnalytics } from '@next/third-parties/google'
 import SearchHeader from '@/components/SearchHeader'
 
 export const metadata = {
@@ -23,7 +24,7 @@ export default function RootLayout({
           {children}
           <NowPlayingFooter />
         </body>
-        
+        <GoogleAnalytics gaId="G-7G8Q6W9FGH" />
       </html>
     </AppContextProvider>
   )

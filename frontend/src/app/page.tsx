@@ -44,9 +44,6 @@ export default function Home() {
       <div className=' flex flex-row items-center justify-around max-w-6xl flex-wrap text-slate-50 w-full mx-auto'>
         <HomeHero />
       </div>
-      
-
-
     </main>
   )
 }
