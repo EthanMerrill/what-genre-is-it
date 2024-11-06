@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@google-cloud/secret-manager": "^4.2.2",
+    "@next/third-parties": "^15.0.2",
     "@tanstack/react-query": "^4.29.3",
     "@types/node": "18.15.11",
     "@types/react": "18.0.36",
