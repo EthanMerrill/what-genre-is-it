@@ -1,7 +1,6 @@
 import NowPlayingFooter from '@/components/NowPlayingFooter'
 import './globals.css'
 import AppContextProvider from '@/context/state'
-import { GoogleAnalytics } from '@next/third-parties/google'
 import SearchHeader from '@/components/SearchHeader'
 
 export const metadata = {
@@ -15,17 +14,19 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <AppContextProvider>
-      <html lang="en">
-        <body className="h-screen bg-gradient-to-t from-slate-950 to-slate-800">
-          <div className='max-w-[800px] mx-auto px-5'>
-            <SearchHeader/>
-          </div>
-          {children}
-          <NowPlayingFooter />
-        </body>
-        <GoogleAnalytics gaId="G-7G8Q6W9FGH" />
-      </html>
-    </AppContextProvider>
+    <>
+      <AppContextProvider>
+        <html lang="en">
+          <body className="h-screen bg-gradient-to-t from-slate-950 to-slate-800">
+            <div className='max-w-[800px] mx-auto px-5'>
+              <SearchHeader />
+            </div>
+            {children}
+            <NowPlayingFooter />
+          </body>
+        </html>
+
+      </AppContextProvider>
+    </>
   )
 }
