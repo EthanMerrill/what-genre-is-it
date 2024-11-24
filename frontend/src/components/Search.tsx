@@ -16,10 +16,10 @@ const Item = (props: any) => {
         item
     } = props
     return (
-            <div id={item.id} className='bg-gray-800 rounded-md flex hover:bg-gray-700 mx-1 my-2 px-1'>
-                <Image className='rounded-l-md' alt={`cover art for ${item.album.name}`} src={item.album.images[0].url} width={50} height={50} />
-                <p className='text-white text-md my-auto mx-4'>{item.name} | {item.artists[0].name}</p>
-            </div>
+        <div id={item.id} className='bg-gray-800 rounded-md flex hover:bg-gray-700 mx-1 my-2 px-1'>
+            <Image className='rounded-l-md' alt={`cover art for ${item.album.name}`} src={item.album.images[0].url} width={50} height={50} />
+            <p className='text-white text-md my-auto mx-4'>{item.name} | {item.artists[0].name}</p>
+        </div>
     )
 }
 
@@ -72,13 +72,10 @@ export default function Search() {
             onEnter={async (query: string) => {
                 router.push('/song/' + query.replaceAll(' ', '-'))
             }}
-            // onChange={async (query: string) => {
-            //     setQuery(query)
-            // }}
             onSelect={async (query: any) => {
-                if(query) {
-                setSearchedSongId(query?.id)
-                router.push('/song/' + query?.name.replaceAll(' ', '-'))
+                if (query) {
+                    setSearchedSongId(query?.id)
+                    router.push('/song/' + query?.name.replaceAll(' ', '-'))
                 }
             }}
             debounceWait={250}
