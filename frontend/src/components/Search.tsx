@@ -1,11 +1,10 @@
 import Turnstone from 'turnstone'
 import turnstoneStyles from '@/styles/turnstoneStyles.js'
 import { useRouter } from 'next/navigation.js'
-import { use, useContext, useEffect, useState } from 'react'
+import React, { use, useContext, useEffect, useState } from 'react'
 import { AppContext } from '@/context/state'
 import Image from 'next/image'
 import Link from 'next/link'
-
 
 // Custom Item component
 const Item = (props: any) => {
@@ -64,6 +63,28 @@ export default function Search() {
     const spotifyToken = appContext.spotifyToken
     const setSearchedSongId = appContext.setSearchedSongId
 
+    let listboxData = listbox(spotifyToken)
+
+    interface TrackItem {
+        id: string;
+        name: string;
+        artists: { name: string }[];
+        album: { name: string; images: { url: string }[] };
+    }
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+        if (event.key === 'Enter') {
+            console.log(event.key, event.code)
+        }
+    };
+
+    useEffect(() => {
+        window.addEventListener('keydown', handleKeyDown);
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, []);
+
     return (
         <Turnstone
             id='search'
@@ -79,7 +100,7 @@ export default function Search() {
                 }
             }}
             debounceWait={250}
-            listbox={listbox(spotifyToken)}
+            listbox={listboxData}
             typeahead={true}
             Item={Item}
         />

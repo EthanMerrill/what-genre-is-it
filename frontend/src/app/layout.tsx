@@ -2,6 +2,7 @@ import NowPlayingFooter from '@/components/NowPlayingFooter'
 import './globals.css'
 import AppContextProvider from '@/context/state'
 import SearchHeader from '@/components/SearchHeader'
+import { SignatureFooter } from 'ethan-common-components'
 
 export const metadata = {
   title: 'What Genre Is This?',
@@ -23,9 +24,11 @@ export default function RootLayout({
             </div>
             {children}
             <NowPlayingFooter />
+            <div className='absolute bottom-0 w-full'>
+              <SignatureFooter backgroundColor='#020617' fontColor='white' />
+            </div>
           </body>
         </html>
-
       </AppContextProvider>
     </>
   )
