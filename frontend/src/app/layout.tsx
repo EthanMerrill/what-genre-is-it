@@ -24,7 +24,7 @@ export default function RootLayout({
             </div>
             {children}
             <NowPlayingFooter />
-            <div className='absolute bottom-0 w-full'>
+            <div className='absolute bottom-0 w-full z-[-10]'>
               <SignatureFooter backgroundColor='#020617' fontColor='white' />
             </div>
           </body>

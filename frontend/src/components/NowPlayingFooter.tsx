@@ -31,7 +31,7 @@ export default function NowPlayingFooter() {
     if (!user_access_token) {
         // if no access token, authenticate with spotify
         return (
-            <div className="fixed bottom-20 w-full">
+            <div className="fixed md:bottom-20 bottom-40 w-full">
                 <div className='flex flex-row items-center justify-betwen w-full pr-10 py-2 rounded-lg drop-shadow-[-2_5px_5px_rgba(0,0,0,0.25)] h-24 bg-white max-w-[800px] mx-auto'>
                     <div className='w-full'>
                         <p className='px-auto w-full text-center py-2 text-sm'>To view the genre of what is currently playing: </p>
