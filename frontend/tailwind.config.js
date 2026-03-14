@@ -12,17 +12,15 @@ module.exports = {
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
-
       animation: {
         fade: 'fadeIn 1s ease-in-out',
         fadeSlow: 'fadeIn 2s ease-in-out',
         bounce1: 'bounce1 .5s infinite',
       },
-      // that is actual animation
-      keyframes: theme => ({
+      keyframes: {
         fadeIn: {
-          '0%': { opacity: 0 },
-          '100%': { color: 1 },
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
         },
         bounce1: {
           '0%, 100%': {
@@ -34,9 +32,8 @@ module.exports = {
             animationTimingFunction: 'cubic-bezier(0, 0, 0.7, 1)'
           }
         },
-      
-      }),
+      },
     },
-    plugins: [],
-  }
+  },
+  plugins: [],
 }
