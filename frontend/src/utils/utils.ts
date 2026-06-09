@@ -1,11 +1,12 @@
-import {useMemo} from "react";
+import {useState, useEffect} from "react";
 import axios, {AxiosResponse} from "axios";
 import FooterInfo from "@/types/footerInfo.interface";
 
 export const useRandomString = (length: number) => {
-	const randomString = useMemo(() => {
-		// eslint-disable-next-line react-hooks/purity
-		return Math.random().toString(36).substr(2, length);
+	const [randomString, setRandomString] = useState("");
+
+	useEffect(() => {
+		setRandomString(Math.random().toString(36).substr(2, length));
 	}, [length]);
 
 	return randomString;

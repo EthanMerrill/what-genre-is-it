@@ -1,110 +1,46 @@
 "use client";
-import Turnstone from "turnstone";
-import turnstoneStyles from "@/styles/turnstoneStyles.js";
 import {useRouter} from "next/navigation";
-import React, {use, useContext, useEffect, useState} from "react";
+import React, {useContext} from "react";
 import {AppContext} from "@/context/state";
 import Image from "next/image";
-import Link from "next/link";
+import SearchAutocomplete from "./SearchAutocomplete";
 
-// Custom Item component
-const Item = (props: any) => {
+// Custom Item component for rendering each search result
+const SearchResultItem = ({item}: {item: any}) => {
 	const appContext = useContext(AppContext);
 	const setSearchedSongId = appContext.setSearchedSongId;
 
-	const {item} = props;
 	return (
-		<div id={item.id} className="bg-gray-800 rounded-md flex hover:bg-gray-700 mx-1 my-2 px-1">
-			<Image className="rounded-l-md" alt={`cover art for ${item.album.name}`} src={item.album.images[0].url} width={50} height={50} />
+		<div id={item.id} className="bg-gray-800 rounded-md flex hover:bg-gray-700 mx-1 my-2 px-1" onClick={() => setSearchedSongId(item.id)}>
+			{item.album?.images?.[0]?.url && <Image className="rounded-l-md" alt={`cover art for ${item.album.name}`} src={item.album.images[0].url} width={50} height={50} />}
 			<p className="text-white text-md my-auto mx-4">
-				{item.name} | {item.artists[0].name}
+				{item.name} | {item.artists?.[0]?.name}
 			</p>
 		</div>
 	);
 };
 
-const listbox = (spotifyToken: string) => [
-	{
-		// id: 'songs',
-		// name: 'Songs',
-		ratio: 8,
-		displayField: "name",
-		data: (query: string) =>
-			fetch("https://api.spotify.com/v1/search?q=" + encodeURIComponent(query) + "&type=track&limit=5", {
-				method: "GET",
-				headers: {
-					Authorization: "Bearer " + spotifyToken,
-				},
-			})
-				.then((res) => {
-					return res.json();
-				})
-				.then((data) => {
-					data.tracks.items.map((item: any) => {
-						return {
-							id: item.id,
-							name: item.name,
-							artist: item.artists[0].name,
-							album: item.album.name,
-							image: item.album.images[0].url,
-						};
-					});
-					return data.tracks.items;
-				}),
-		searchType: "startswith",
-	},
-];
-
 export default function Search() {
 	const router = useRouter();
-
-	const [query, setQuery] = useState<string>("");
-	const [results, setResults] = useState<any>([]);
 
 	const appContext = useContext(AppContext);
 	const spotifyToken = appContext.spotifyToken;
 	const setSearchedSongId = appContext.setSearchedSongId;
 
-	let listboxData = listbox(spotifyToken);
-
-	interface TrackItem {
-		id: string;
-		name: string;
-		artists: {name: string}[];
-		album: {name: string; images: {url: string}[]};
-	}
-
-	const handleKeyDown = (event: KeyboardEvent) => {
-		if (event.key === "Enter") {
-			console.log(event.key, event.code);
-		}
-	};
-
-	useEffect(() => {
-		window.addEventListener("keydown", handleKeyDown);
-		return () => {
-			window.removeEventListener("keydown", handleKeyDown);
-		};
-	}, []);
-
 	return (
-		<Turnstone
-			id="search"
-			styles={turnstoneStyles}
+		<SearchAutocomplete
+			spotifyToken={spotifyToken}
 			placeholder="Search for a song"
-			onEnter={async (query: string) => {
+			onEnter={(query: string) => {
 				router.push("/song/" + query.replaceAll(" ", "-"));
 			}}
-			onSelect={async (query: any) => {
-				if (query) {
-					setSearchedSongId(query?.id);
-					router.push("/song/" + query?.name.replaceAll(" ", "-"));
+			onSelect={(item: any) => {
+				if (item) {
+					setSearchedSongId(item.id);
+					router.push("/song/" + item.name.replaceAll(" ", "-"));
 				}
 			}}
-			debounceWait={250}
-			listbox={listboxData}
-			typeahead={true}
-			Item={Item}
+			ItemComponent={SearchResultItem}
 		/>
 	);
 }
