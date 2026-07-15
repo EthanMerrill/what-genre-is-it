@@ -1,21 +1,16 @@
 import { render, screen } from '@testing-library/react'
 import Home from '../page'
 import '@testing-library/jest-dom'
-import { useRouter } from 'next/navigation'
-import { act } from 'react-dom/test-utils'
+import { act } from 'react'
 
-jest.mock('next/router', () => ({
-    useRouter: jest.fn()
-  }))
-  
 describe('Home', () => {
     
-  it('Has Welcome Text', () => {
+  it('Renders the HomeHero component', () => {
     act(() => {
         render(<Home />)
-        const welcomeText = screen.getByText( 'What genre is this?')
     })
-    
-    expect(welcomeText).toBeInTheDocument()
+    // The HomeHero renders music note emojis
+    const musicNotes = screen.getAllByText('🎵')
+    expect(musicNotes.length).toBeGreaterThan(0)
   })
 })
