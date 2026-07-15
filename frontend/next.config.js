@@ -9,7 +9,7 @@ const nextConfig = {
 		],
 	},
 	transpilePackages: ["ethan-common-components"],
-	serverExternalPackages: ["firebase", "@google-cloud/secret-manager"],
+	serverExternalPackages: ["firebase"],
 	typescript: {
 		ignoreBuildErrors: true,
 	},
