@@ -31,13 +31,13 @@ export default function Search() {
 		<SearchAutocomplete
 			spotifyToken={spotifyToken}
 			placeholder="Search for a song"
-			onEnter={(query: string) => {
-				router.push("/song/" + query.replaceAll(" ", "-"));
+			onEnter={() => {
+				// The first autocomplete result is selected automatically when Enter is pressed.
 			}}
 			onSelect={(item: any) => {
-				if (item) {
+				if (item?.id) {
 					setSearchedSongId(item.id);
-					router.push("/song/" + item.name.replaceAll(" ", "-"));
+					router.push(`/song/${encodeURIComponent(item.id)}`);
 				}
 			}}
 			ItemComponent={SearchResultItem}

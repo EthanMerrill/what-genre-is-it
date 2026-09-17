@@ -3,12 +3,24 @@ import React, {useState, useEffect, useRef, useCallback} from "react";
 import Image from "next/image";
 
 interface SearchAutocompleteProps {
-	spotifyToken: string;
+	spotifyToken: string | null;
 	onSelect: (item: any) => void;
 	onEnter: (query: string) => void;
 	placeholder?: string;
 	ItemComponent?: React.ComponentType<any>;
 }
+
+interface SpotifySearchResponse {
+	tracks?: {
+		items?: TrackItem[];
+	};
+}
+
+const getSpotifyErrorMessage = (status: number) => {
+	if (status === 401) return "Spotify authentication expired. Please authenticate again.";
+	if (status === 429) return "Spotify is temporarily rate-limiting requests. Please try again shortly.";
+	return "Spotify search is unavailable right now.";
+};
 
 interface TrackItem {
 	id: string;
@@ -25,6 +37,7 @@ export default function SearchAutocomplete({spotifyToken, onSelect, onEnter, pla
 	const [results, setResults] = useState<TrackItem[]>([]);
 	const [isOpen, setIsOpen] = useState(false);
 	const [highlightedIndex, setHighlightedIndex] = useState(-1);
+	const [error, setError] = useState<string | null>(null);
 	const inputRef = useRef<HTMLInputElement>(null);
 	const listRef = useRef<HTMLDivElement>(null);
 	const debounceRef = useRef<NodeJS.Timeout | null>(null);
@@ -35,21 +48,33 @@ export default function SearchAutocomplete({spotifyToken, onSelect, onEnter, pla
 
 		if (query.length < 2) {
 			setResults([]);
+			setError(null);
 			setIsOpen(false);
+			return;
+		}
+
+		if (!spotifyToken) {
+			setResults([]);
+			setError("Authenticate with Spotify before searching.");
+			setIsOpen(true);
 			return;
 		}
 
 		debounceRef.current = setTimeout(async () => {
 			try {
+				setError(null);
 				const res = await fetch(`https://api.spotify.com/v1/search?q=${encodeURIComponent(query)}&type=track&limit=5`, {
 					headers: {Authorization: `Bearer ${spotifyToken}`},
 				});
-				const data = await res.json();
-				setResults(data.tracks?.items || []);
+				const data = (await res.json()) as SpotifySearchResponse & {error?: {status?: number}};
+				if (!res.ok) throw new Error(getSpotifyErrorMessage(data.error?.status ?? res.status));
+				setResults(data.tracks?.items ?? []);
 				setIsOpen(true);
 				setHighlightedIndex(-1);
-			} catch {
+			} catch (caughtError) {
 				setResults([]);
+				setError(caughtError instanceof Error ? caughtError.message : "Spotify search is unavailable right now.");
+				setIsOpen(true);
 			}
 		}, 250);
 
@@ -79,8 +104,9 @@ export default function SearchAutocomplete({spotifyToken, onSelect, onEnter, pla
 				setHighlightedIndex((prev) => Math.max(prev - 1, 0));
 			} else if (e.key === "Enter") {
 				e.preventDefault();
-				if (highlightedIndex >= 0 && results[highlightedIndex]) {
-					handleSelect(results[highlightedIndex]);
+				const selectedItem = highlightedIndex >= 0 ? results[highlightedIndex] : results[0];
+				if (selectedItem) {
+					handleSelect(selectedItem);
 				} else if (query.trim()) {
 					onEnter(query.trim());
 					setIsOpen(false);
@@ -120,8 +146,9 @@ export default function SearchAutocomplete({spotifyToken, onSelect, onEnter, pla
 				placeholder={placeholder}
 				className="mx-1 px-2 w-full h-12 border py-2 pl-10 pr-9 text-xl outline-none rounded-full text-slate-700 dark:text-slate-50 dark:bg-gray-800 placeholder-slate-400"
 			/>
-			{isOpen && results.length > 0 && (
+			{isOpen && (error || results.length > 0) && (
 				<div ref={listRef} className="bg-gray-900 rounded-md w-full my-4 py-4 absolute z-50">
+					{error && <p className="px-4 text-sm text-red-300">{error}</p>}
 					{results.map((item, index) => (
 						<div
 							key={item.id}

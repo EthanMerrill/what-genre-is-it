@@ -35,24 +35,22 @@ export const getFooterData = async (user_access_token: string) => {
 	return footerInfo;
 };
 
-export const getTrackData = async (user_access_token: string, trackId: string) => {
-	const headers = {
-		Authorization: "Bearer " + user_access_token,
-	};
-	// get song information
-	const songDetails = await fetch(`https://api.spotify.com/v1/tracks/${trackId}`, {
-		headers: headers,
-	});
-	const data = await songDetails.json();
+const spotifyFetch = async (user_access_token: string, url: string) => {
+	if (!user_access_token) throw new Error("Authenticate with Spotify before searching.");
+	const response = await fetch(url, {headers: {Authorization: `Bearer ${user_access_token}`}});
+	const data = await response.json().catch(() => ({}));
+	if (!response.ok) {
+		if (response.status === 401) throw new Error("Spotify authentication expired. Please authenticate again.");
+		if (response.status === 429) throw new Error("Spotify is temporarily rate-limiting requests. Please try again shortly.");
+		throw new Error(data.error?.message ?? "Spotify request failed.");
+	}
 	return data;
 };
 
+export const getTrackData = async (user_access_token: string, trackId: string) => {
+	return spotifyFetch(user_access_token, `https://api.spotify.com/v1/tracks/${encodeURIComponent(trackId)}`);
+};
+
 export const getArtistData = async (user_access_token: string, artistId: string) => {
-	const headers = {
-		Authorization: "Bearer " + user_access_token,
-	};
-	// get song information
-	const genre = await fetch(`https://api.spotify.com/v1/artists/${artistId}`, {headers: headers});
-	const genreData = await genre.json();
-	return genreData;
+	return spotifyFetch(user_access_token, `https://api.spotify.com/v1/artists/${encodeURIComponent(artistId)}`);
 };
